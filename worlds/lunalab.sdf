@@ -154,7 +154,7 @@
     <!-- Lunar gravity -->
     <gravity>0 0 -1.62</gravity>
 
-    <!-- TEMPORARY placeholder light — replaced with calibrated spotlight in Step 2 -->
+    <!-- Dawn/Dusk sun simulation — ~4° elevation, per SPICE-HL³ paper's low-sun-angle config -->
     <light name="sun_light" type="directional">
       <pose>0 0 0.4 0 0 0</pose>
       <diffuse>1.0 0.953 0.937 1</diffuse>
@@ -206,23 +206,28 @@
       </link>
     </model>
 
-    <!-- Rocks (positive obstacles) — 8 rocks, now using the real "Moon Rocks" mesh
-         (CC-BY 4.0, Ivan Vakulko / @milos4 on Sketchfab) for visuals, with the
-         original simple sphere kept as a collision proxy for robust physics
-         (raw mesh collision can be unreliable in ODE without convex decomposition).
-         Each instance varies in scale and rotation so they don't look like obvious
-         copy-paste clones despite sharing one mesh. Tune <scale> per rock if the
-         mesh's native size makes some look too big/small once you see it rendered. -->
+    <!-- Rocks (positive obstacles) — 8 of the 15 split "Moon Rocks" meshes
+         (CC-BY 4.0, Ivan Vakulko / @milos4 on Sketchfab), chosen for size variety.
+         IMPORTANT: source asset is authored Y-up; visual meshes get a fixed
+         90° roll (1.5708 rad) to convert to Gazebo's Z-up convention. Collision
+         stays a simple sphere (robust ODE physics, no convex decomposition needed).
+         Sphere and mesh each have their own local <pose> within the link so both
+         sit flush with local ground (z=0) independently of the model's pose,
+         which just carries the rock's (x, y) placement on the terrain. -->
     <model name="rock_1">
       <static>true</static>
-      <pose>2.5 1.5 0.25 0 0 0.4</pose>
+      <pose>2.5 1.5 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.25</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.25 0 0 0</pose>
+          <geometry><sphere><radius>0.25</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.2956 1.5708 0 0.4</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.3 0.3 0.3</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.013.obj</uri>
+              <scale>0.2615 0.2615 0.2615</scale>
             </mesh>
           </geometry>
         </visual>
@@ -230,14 +235,18 @@
     </model>
     <model name="rock_2">
       <static>true</static>
-      <pose>-1.8 -2.0 0.2 0.1 0 1.2</pose>
+      <pose>-1.8 -2.0 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.2</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.2 0 0 0</pose>
+          <geometry><sphere><radius>0.2</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.1527 1.5708 0 1.2</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.24 0.24 0.24</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.011.obj</uri>
+              <scale>0.2903 0.2903 0.2903</scale>
             </mesh>
           </geometry>
         </visual>
@@ -245,14 +254,18 @@
     </model>
     <model name="rock_3">
       <static>true</static>
-      <pose>3.0 -1.5 0.3 0 0.15 2.1</pose>
+      <pose>3.0 -1.5 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.3</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.3 0 0 0</pose>
+          <geometry><sphere><radius>0.3</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.1877 1.5708 0 2.1</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.36 0.36 0.36</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.006.obj</uri>
+              <scale>0.2603 0.2603 0.2603</scale>
             </mesh>
           </geometry>
         </visual>
@@ -260,14 +273,18 @@
     </model>
     <model name="rock_4">
       <static>true</static>
-      <pose>-3.2 2.2 0.22 0.05 0 3.0</pose>
+      <pose>-3.2 2.2 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.22</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.22 0 0 0</pose>
+          <geometry><sphere><radius>0.22</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.1230 1.5708 0 3.0</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.26 0.26 0.26</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.008.obj</uri>
+              <scale>0.2914 0.2914 0.2914</scale>
             </mesh>
           </geometry>
         </visual>
@@ -275,14 +292,18 @@
     </model>
     <model name="rock_5">
       <static>true</static>
-      <pose>4.0 3.0 0.15 0 0 0.8</pose>
+      <pose>4.0 3.0 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.15</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.15 0 0 0</pose>
+          <geometry><sphere><radius>0.15</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.1661 1.5708 0 0.8</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.18 0.18 0.18</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.005.obj</uri>
+              <scale>0.2607 0.2607 0.2607</scale>
             </mesh>
           </geometry>
         </visual>
@@ -290,14 +311,18 @@
     </model>
     <model name="rock_6">
       <static>true</static>
-      <pose>-4.5 -3.0 0.35 0.1 0.1 4.2</pose>
+      <pose>-4.5 -3.0 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.35</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.35 0 0 0</pose>
+          <geometry><sphere><radius>0.35</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.2746 1.5708 0 4.2</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.42 0.42 0.42</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.016.obj</uri>
+              <scale>0.2238 0.2238 0.2238</scale>
             </mesh>
           </geometry>
         </visual>
@@ -305,14 +330,18 @@
     </model>
     <model name="rock_7">
       <static>true</static>
-      <pose>0.0 3.5 0.18 0 0 5.0</pose>
+      <pose>0.0 3.5 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.18</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.18 0 0 0</pose>
+          <geometry><sphere><radius>0.18</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.1877 1.5708 0 5.0</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.22 0.22 0.22</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.002.obj</uri>
+              <scale>0.2636 0.2636 0.2636</scale>
             </mesh>
           </geometry>
         </visual>
@@ -320,14 +349,18 @@
     </model>
     <model name="rock_8">
       <static>true</static>
-      <pose>-0.5 0.5 0.12 0 0.2 1.7</pose>
+      <pose>-0.5 0.5 0 0 0 0</pose>
       <link name="link">
-        <collision name="collision"><geometry><sphere><radius>0.12</radius></sphere></geometry></collision>
+        <collision name="collision">
+          <pose>0 0 0.12 0 0 0</pose>
+          <geometry><sphere><radius>0.12</radius></sphere></geometry>
+        </collision>
         <visual name="visual">
+          <pose>0 0 0.0940 1.5708 0 1.7</pose>
           <geometry>
             <mesh>
-              <uri>file:///home/shayaan/lunar-digital-twin/meshes/moonrock.obj</uri>
-              <scale>0.14 0.14 0.14</scale>
+              <uri>file:///home/shayaan/lunar-digital-twin/meshes/rocks_split/rock.009.obj</uri>
+              <scale>0.3081 0.3081 0.3081</scale>
             </mesh>
           </geometry>
         </visual>
