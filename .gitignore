@@ -1,0 +1,10 @@
+# Raw downloaded asset archive - extracted contents are tracked directly
+meshes/moonrock_fbx/*.zip
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Editor/OS cruft
+.vscode/
+*~
