@@ -7,6 +7,11 @@
       <real_time_factor>1.0</real_time_factor>
     </physics>
 
+    <plugin
+      filename="libgz-sim-imu-system.so"
+      name="gz::sim::systems::Imu">
+    </plugin>
+
     <plugin filename="ignition-gazebo-physics-system" name="ignition::gazebo::systems::Physics"/>
     <plugin filename="ignition-gazebo-scene-broadcaster-system" name="ignition::gazebo::systems::SceneBroadcaster"/>
     <plugin filename="ignition-gazebo-user-commands-system" name="ignition::gazebo::systems::UserCommands"/>
@@ -165,6 +170,7 @@
 
     <!-- Ground plane: 11m x 8m test bed, basaltic gravel approximation -->
     <model name="lunalab_terrain">
+      <pose>0 0 -0.3828 0 0 0</pose>
       <static>true</static>
       <link name="link">
         <collision name="collision">
